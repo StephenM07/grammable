@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe GramsController, type: :controller do
 
+
   describe "grams#destroy action" do
     it "should allow a user to destroy grams" do
       gram = FactoryBot.create(:gram)
@@ -104,7 +105,14 @@ RSpec.describe GramsController, type: :controller do
       sign_in user
 
 
-      post :create, params: { gram: { message: 'Hello!' } }
+      post :create, params: {
+        gram: {
+          message: 'Hello!',
+          picture: fixture_file_upload("/picture.png", 'image/png')
+        } 
+      }
+
+      
       expect(response).to redirect_to root_path
 
       gram = Gram.last

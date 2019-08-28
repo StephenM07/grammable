@@ -1,12 +1,13 @@
 class GramsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
 
-  def new
-    @gram = Gram.new
+   def index
+    @grams = Gram.all
   end
 
-  def index
-  end
+  def new
+    @gram = Gram.new
+  end 
 
   def create
     @gram = current_user.grams.create(gram_params)
@@ -47,13 +48,10 @@ class GramsController < ApplicationController
     redirect_to root_path
   end
 
-  private
+  private 
 
   def gram_params
-    params.require(:gram).permit(:message)
+    params.require(:gram).permit(:message, :picture, :comments)
   end
 
-  def render_not_found
-    render plain: 'Not Found :(', status: :not_found
-  end
 end
